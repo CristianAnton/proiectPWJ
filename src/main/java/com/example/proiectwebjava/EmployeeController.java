@@ -1,5 +1,6 @@
 package com.example.proiectwebjava;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,11 @@ import java.util.Set;
 @RequestMapping("/api")
 public class EmployeeController {
 
+    @Autowired
     private EmployeeService employeeService;
+    @Autowired
     private DepartmentService departmentService;
+    @Autowired
     private TaskService taskService;
 
 
@@ -37,7 +41,7 @@ public class EmployeeController {
     public ResponseEntity<Void> addEmployee(String firstName, String lastName){
         Employee employee = new Employee(firstName,lastName);
         employeeService.saveEmployee(employee);
-        URI uri = WebMvcLinkBuilder.linkTo(MainController.class).slash("employees").slash(employee.getId()).toUri();
+        URI uri = WebMvcLinkBuilder.linkTo(EmployeeController.class).slash("employees").slash(employee.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 

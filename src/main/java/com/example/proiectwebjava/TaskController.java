@@ -1,5 +1,6 @@
 package com.example.proiectwebjava;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,9 @@ import java.util.Set;
 @RequestMapping("/api")
 public class TaskController {
 
+    @Autowired
     private TaskService taskService;
+    @Autowired
     private EmployeeService employeeService;
 
     @GetMapping(path = "/tasks",produces = MediaType.APPLICATION_JSON_VALUE)
@@ -35,7 +38,7 @@ public class TaskController {
     public ResponseEntity<Void> addTask(String description, String boss){
         Task task = new Task(description,boss);
         taskService.saveTask(task);
-        URI uri = WebMvcLinkBuilder.linkTo(MainController.class).slash("tasks").slash(task.getId()).toUri();
+        URI uri = WebMvcLinkBuilder.linkTo(TaskController.class).slash("tasks").slash(task.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 

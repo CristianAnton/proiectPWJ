@@ -1,5 +1,6 @@
 package com.example.proiectwebjava;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,9 @@ import java.util.Set;
 @RequestMapping("/api")
 public class DepartmentController {
 
+    @Autowired
     private DepartmentService departmentService;
+    @Autowired
     private EmployeeService employeeService;
 
     @GetMapping(path = "/departments", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -35,7 +38,7 @@ public class DepartmentController {
     public ResponseEntity<Void> addDepartment (String name,String description) {
         Department department = new Department(name,description);
         departmentService.saveDepartment(department);
-        URI uri = WebMvcLinkBuilder.linkTo(MainController.class).slash("departments").slash(department.getId()).toUri();
+        URI uri = WebMvcLinkBuilder.linkTo(DepartmentController.class).slash("departments").slash(department.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 

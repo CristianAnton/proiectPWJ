@@ -1,5 +1,6 @@
 package com.example.proiectwebjava;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,9 @@ import java.util.Set;
 @RequestMapping("/api")
 public class CompanyController {
 
+    @Autowired
     private CompanyService companyService;
+    @Autowired
     private DepartmentService departmentService;
 
     @GetMapping(path = "/companies",produces = MediaType.APPLICATION_JSON_VALUE)
@@ -36,7 +39,7 @@ public class CompanyController {
     public ResponseEntity<Void> addCompany(String name, String city, String specialty){
         Company company = new Company(name,city,specialty);
         companyService.saveCompany(company);
-        URI uri = WebMvcLinkBuilder.linkTo(MainController.class).slash("companies").slash(company.getId()).toUri();
+        URI uri = WebMvcLinkBuilder.linkTo(CompanyController.class).slash("companies").slash(company.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 

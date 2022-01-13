@@ -8,15 +8,20 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import java.util.Collection;
 import java.util.Optional;
+
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class CompanyServiceTest {
 
-    @InjectMocks
+    @Autowired
     private CompanyService companyService;
-
-    @Mock
+    @Autowired
     private CompanyRepository companyRepository;
 
     private static Optional<Company> company;
@@ -30,7 +35,7 @@ public class CompanyServiceTest {
         size=6;
     }
 
-    /*
+/*
     @Test
     @DisplayName("Test get companies")
     public void testGetAllCompanies() {
@@ -43,5 +48,5 @@ public class CompanyServiceTest {
         Assert.assertEquals(company, companyService.findCompanyById(id));
     }
 
- */
+*/
 }

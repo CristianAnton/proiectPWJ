@@ -4,33 +4,30 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name="department")
-public class Department {
+@Table(name="task")
+public class Task {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     private String description;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable( name = "team", joinColumns = @JoinColumn(name = "department_id"), inverseJoinColumns = @JoinColumn(name = "company_id") )
-    private Set<Company> companies;
+    @Column(name = "boss", nullable = false)
+    private String boss;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name="employee_id")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable( name = "work", joinColumns = @JoinColumn(name = "task_id"), inverseJoinColumns = @JoinColumn(name = "employee_id") )
     private Set<Employee> employees;
 
-    public Department() {
+    public Task() {
 
     }
 
-    public Department(String name, String description) {
-        this.name = name;
+    public Task(String description, String boss) {
         this.description = description;
+        this.boss = boss;
     }
 
     public long getId() {
@@ -41,14 +38,6 @@ public class Department {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -57,12 +46,12 @@ public class Department {
         this.description = description;
     }
 
-    public Set<Company> getCompanies() {
-        return companies;
+    public String getBoss() {
+        return boss;
     }
 
-    public void setCompanies(Set<Company> companies) {
-        this.companies = companies;
+    public void setBoss(String boss) {
+        this.boss = boss;
     }
 
     public Set<Employee> getEmployees() {
@@ -81,9 +70,9 @@ public class Department {
         employees.remove(employee);
     }
 
-    public void update(Department department){
-        this.name = department.getName();
-        this.description = department.getDescription();
+    public void update(Task task){
+        this.description = task.getDescription();
+        this.boss = task.getBoss();
     }
 
 }

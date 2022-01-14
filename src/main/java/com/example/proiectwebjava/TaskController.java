@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+@RestController
 @RequestMapping("/api")
 public class TaskController {
 
@@ -59,7 +60,7 @@ public class TaskController {
         Optional<Task> existingTask = taskService.findTaskById(id);
         if(existingTask.isPresent())
         {
-            taskService.saveTask(existingTask.get());
+            taskService.deleteTask(existingTask.get());
             return ResponseEntity.noContent().build();
         }
         else { return ResponseEntity.notFound().build(); }
